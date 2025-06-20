@@ -3,48 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Crop Service</title>
+    <title>Image Crop Service - Visual Editor</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🖼️ Image Crop Service</h1>
-            <p>Upload an image to get started</p>
+            <h1>🖼️ Visual Image Crop Service</h1>
+            <p>Upload an image and draw your crop area</p>
         </header>
 
-        <div class="upload-section">
-            <form id="uploadForm" enctype="multipart/form-data">
-                <div class="upload-area">
-                    <input type="file" id="imageInput" name="image" accept="image/*" required>
-                    <label for="imageInput">Choose Image File</label>
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <div class="upload-icon">📁</div>
+                    <p>Drop your image here or click to browse</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas Editor Section -->
+        <div class="editor-section" id="editorSection" style="display: none;">
+            <div class="toolbar">
+                <div class="tool-group">
+                    <label>Selection Tool:</label>
+                    <select id="selectionTool">
+                        <option value="rectangle">Rectangle</option>
+                        <option value="circle">Circle</option>
+                        <option value="freehand">Freehand</option>
+                    </select>
                 </div>
                 
-                <div class="crop-controls">
-                    <h3>Crop Settings</h3>
-                    <div class="control-group">
-                        <label>X: <input type="number" id="cropX" value="0" min="0"></label>
-                        <label>Y: <input type="number" id="cropY" value="0" min="0"></label>
-                        <label>Width: <input type="number" id="cropWidth" value="200" min="1"></label>
-                        <label>Height: <input type="number" id="cropHeight" value="200" min="1"></label>
-                    </div>
+                <div class="tool-group">
+                    <button id="clearBtn" class="btn btn-secondary">Clear Selection</button>
+                    <button id="undoBtn" class="btn btn-secondary">Undo</button>
                 </div>
 
-                <button type="submit" class="btn-primary">Crop Image</button>
-            </form>
+                <div class="tool-group">
+                    <label>
+                        <input type="checkbox" id="invertSelection"> Invert Selection
+                    </label>
+                </div>
+
+                <div class="tool-group">
+                    <label for="featherSlider">Feather: <span id="featherValue">0</span>px</label>
+                    <input type="range" id="featherSlider" min="0" max="20" value="0">
+                </div>
+
+                <button id="processBtn" class="btn btn-primary">Apply Crop</button>
+            </div>
+
+            <div class="canvas-container">
+                <div class="canvas-wrapper">
+                    <canvas id="imageCanvas"></canvas>
+                    <canvas id="selectionCanvas"></canvas>
+                </div>
+                <div class="canvas-info">
+                    <p id="canvasInfo">Click and drag to select an area</p>
+                </div>
+            </div>
         </div>
 
+        <!-- Result Section -->
         <div class="result-section" id="resultSection" style="display: none;">
             <h3>Result</h3>
-            <img id="resultImage" alt="Cropped image">
-            <button id="downloadBtn" class="btn-secondary">Download</button>
+            <div class="result-container">
+                <img id="resultImage" alt="Processed image">
+                <div class="result-actions">
+                    <button id="downloadBtn" class="btn btn-primary">Download</button>
+                    <button id="newImageBtn" class="btn btn-secondary">Process New Image</button>
+                </div>
+            </div>
         </div>
 
+        <!-- Loading Indicator -->
         <div class="loading" id="loading" style="display: none;">
-            <p>Processing...</p>
+            <div class="spinner"></div>
+            <p>Processing image...</p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- This is where we call the canvas editor -->
+    <script src="canvas-editor.js"></script>
 </body>
 </html>
