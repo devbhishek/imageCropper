@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Crop Service</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖼️ Image Crop Service</h1>
+            <p>Upload an image to get started</p>
+        </header>
+
+        <div class="upload-section">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="upload-area">
+                    <input type="file" id="imageInput" name="image" accept="image/*" required>
+                    <label for="imageInput">Choose Image File</label>
+                </div>
+                
+                <div class="crop-controls">
+                    <h3>Crop Settings</h3>
+                    <div class="control-group">
+                        <label>X: <input type="number" id="cropX" value="0" min="0"></label>
+                        <label>Y: <input type="number" id="cropY" value="0" min="0"></label>
+                        <label>Width: <input type="number" id="cropWidth" value="200" min="1"></label>
+                        <label>Height: <input type="number" id="cropHeight" value="200" min="1"></label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Crop Image</button>
+            </form>
+        </div>
+
+        <div class="result-section" id="resultSection" style="display: none;">
+            <h3>Result</h3>
+            <img id="resultImage" alt="Cropped image">
+            <button id="downloadBtn" class="btn-secondary">Download</button>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
